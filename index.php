@@ -9,7 +9,7 @@ if($verb == "GET"){
   //set constants
   $author = "anonymous";
   $content = "shakespeare was a fake";
-  echo "OH YEA POSTMAN";//default  message
+  echo "OH YEA POSTMAN \n";//default  message
   if(isset($_POST["author"])){
     $author = $_POST["author"];
   }
