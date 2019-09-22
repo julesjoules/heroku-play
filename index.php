@@ -16,6 +16,7 @@ if($verb == "GET"){
    if(isset($_POST["content"])){
     $constent = $_POST["content"];
    }
+  echo "$author: $content";
 } else {
   echo "USAGE GET or POST";
 }
