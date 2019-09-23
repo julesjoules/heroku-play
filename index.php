@@ -10,7 +10,7 @@ if($verb == "GET"){
   //set constants
   $author = "anonymous";//postman
   $content = "shakespeare was a fake";///ooOOoooOoOOoo yeaaa
-  echo n12br("OH YEA POSTMAN \r\n");//default  message, n12br is for new line breaks
+  echo "OH YEA POSTMAN \r\n";//default  message, n12br is for new line breaks
   if(isset($_POST["author"])){
     $author = $_POST["author"];
   }
