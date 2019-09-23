@@ -49,7 +49,7 @@
     //I chose to get associative arrays inside of a big array
     //this will naturally create a pleasant array of JSON data when I echo in a couple lines
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-    echo jason_encode($results);
+    //echo jason_encode($results);
 //else, if not new button pressed, if its the check button, than cross check the words
     //set up rack and variables needed to return all combinations of words
   //  if($results == array()){
