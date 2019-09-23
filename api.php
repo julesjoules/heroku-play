@@ -15,16 +15,16 @@
     $outcount = 0;
 
     //while loop to check for all words associated
-    while(strlen(decbin($count)) < $sizeRack + 10{
-        $binvar = decbin($count);
-        $binvar = strrev($binvar);
-        $count++;
-        $tempArr = "";
-        for($x=0; $x< strlen($binvar); $x++){
-            if($binvar[$x] == "1"){
-                $tempArr = $tempArr.$rack[$x];
-            }
-        }
+   // while(strlen(decbin($count)) < $sizeRack + 10{
+     //   $binvar = decbin($count);
+       // $binvar = strrev($binvar);
+      //  $count++;
+       // $tempArr = "";
+        //for($x=0; $x< strlen($binvar); $x++){
+          //  if($binvar[$x] == "1"){
+            //    $tempArr = $tempArr.$rack[$x];
+            //}
+        //}
         
         $query = "SELECT words FROM racks WHERE rack = \"$tmpArr\"";
         //$statement = $dbhanfle->prepare($query);
@@ -52,19 +52,19 @@
     //echo jason_encode($results);
 //else, if not new button pressed, if its the check button, than cross check the words
     //set up rack and variables needed to return all combinations of words
-    if($results == array()){
-    }
-    else{
-           $finalResults = array();
-           foreach($results[0] as $values){
-            $finalResults = $values;
-         }
-    $explodArr = explode('@@', $finalResults);
-    for($y = 0;$y<count($explodArr); $y++){
-        array_ush($finalRack, $explodArr[$y]);
-    }
-}
-    }
+  //  if($results == array()){
+    //}
+    //else{
+     //      $finalResults = array();
+       //    foreach($results[0] as $values){
+         //   $finalResults = $values;
+         //}
+    //$explodArr = explode('@@', $finalResults);
+   // for($y = 0;$y<count($explodArr); $y++){
+     //   array_ush($finalRack, $explodArr[$y]);
+   // }
+//}
+   // }
           
         
     
