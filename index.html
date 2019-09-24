@@ -1,38 +1,157 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <style>
-      .hidden {
-        display: none;
-      }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-  </head>
-  <body>
-    <h1>Spot The Bingo</h1>
-    <button id="grabmore">Fetch 10 Bingos</button>
-    <ul id="bingos">
-    </ul>
-  </body>
-  <script>
+
+<head>
+  <style>
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="index.css" />
+</head>
+
+<body>
+
+  <h1 class='title'>Text Twistie</h1>
+  <h3>rip of text twist </h3>
+    <br>
+    <form id="nameForm" onkeydown="return event.key != 'Enter';">
+    <label>name:</label>
+    <br>
+    <input type="text" name="user-name" id="user-name" placeholder="who even are you?">
+    <button type="button" id="nameBtn">sign</button>
+    <h3 id="welcome"> <span id= "my-name"> </span></h3>
+    </form>
+      <h6 id = "instruct" > click "start" to begin game with a new set of letters. press "guess" to check guesses.</h6>
+   <!--class = "hidden"-->
+    <br>
+
+    <button type="button" id="grab">Generate a random word jumble.</button>
+    <!--class = "button hidden"-->
+    <p  id = "labelS" > Current scramble: <span id="my-rack"> </span></p>
+    <!--class = "button hidden"-->
+    <br>
+    <div id = "guess" >
+    <!--class = "hidden"-->
+    <form action="api.php" method="post" id="myGuesses" onkeydown="return event.key != 'Enter';">
+    <label >Enter a word guess:</label> <br>
+    <!--class = "hidden"-->
+    <input type="text" name="user-guesses" id="user-guesses" placeholder="Type your guesses here.">
+    <button type="button" id="guessesBtn" >Tack a wack at it!</button>
+    <!--class="button hidden"-->
+    </form>
+    
+    <p> <span id="points-msg"> </span></p>
+    <p> Words found: <span id="my-guesses"> </span></p>
+    <p> Total points: <span id="my-points"> </span></p>
+    </div>
+</body>
+<script>
     $(document).ready(function(){
-      
-      let showRacks = function(racks){
-        $("#bingos").html('');
-        racks.map(rack=>{
-          $("#bingos").append(`<li>${rack.rack}: <span class="answer hidden">${rack.words}</span></li>`);
+        let setRack = function() {
+            var currRack = $('#my-rack').text();
+            localStorage.setItem('currRack', currRack);
+        };
+        
+        var getRack = function() {
+            return localStorage.getItem('currRack');
+        };
+        
+        let setGuessesFound = function() {
+            var currGuess = $('#my-guesses').text();
+            localStorage.setItem('currGuess', currGuess);
+        };
+        
+        var getGuessesFound = function() {
+            return localStorage.getItem('currGuess');
+        };
+        
+        $("#nameBtn").click(function(){
+            $("nameForm").submit();
+            var userName = $("#user-name").val();
+            $('#my-name').text('lets how literate ya are, '+userName+'!');
+            
+            <!--tried to hide and uncover parts of the webpage to force the person to submit
+            //before they can guess
+            
+            //$("#start").hide();
+            //$("#instruct").removeClass("hidden");
+            //$("#labelS").removeClass("hidden");
+            //$("#guess").removeClass("hidden");-->
         });
-        $("#bingos li").on("click", function(evt){
-          $(evt.currentTarget).find(".answer").toggleClass("hidden");
-        });
-      }
-      
-      $("#grabmore").on("click", function(){
-        $.ajax({
-            method: "GET",
+        
+        $("#submitBtn").click(function(){
+            var userRack = $("#user-rack").val();
+            $("#myForm").submit($('#my-rack').text(userRack));
+            $.ajax({
+            method: "POST",
             url: "api.php",
-            success: data=>{ showRacks(data)}
+            data: {'user-rack': userRack},
+            success: function(data) {
+                setRack();
+                $("#points-msg").text(" ");
+                $("#my-guesses").text(" ");
+                setGuessesFound();
+            }
+            });
         });
+        
+        
+        $("#guessesBtn").click(function(){
+            var userGuess = $("#user-guesses").val();
+            var thisRack = getRack();
+            $("#myGuesses").submit(function(e) {
+               e.preventDefault();
+            });
+            $.ajax({
+            method: "POST",
+            url: "api.php",
+            data: {'user-guesses': userGuess,'user-rack':thisRack},
+            success: function(data) {
+                setGuessesFound();
+                guessesFound = getGuessesFound();
+                stringGuess = (data.guess);
+                if (stringGuess != "") {
+                    $("#my-points").text(data.total_points);
+                    $("#points-msg").text("Congrats, your guess of "+stringGuess+" has earned you "+data.this_points+" points.");
+                    if (guessesFound != " ") {
+                        $("#my-guesses").append(", "+stringGuess);
+                    } else {
+                        $("#my-guesses").append(stringGuess);
+                    }
+                } else {
+                    $("#points-msg").text("No points, guess again.");
+                }
+                setGuessesFound();
+            }
+            });
+        });
+        
+        //have a getter to get rack, but other option to randomly generate...not connected yet
+      var randomRackGenerator = function (evt){
+            
+            for ( var i = 0; i < 7; i++ ) {
+                result[i] = characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            result.sort();
+            wordLengthCount =[0,0,0,0,0,0,0];
+            correctGuessList = [];
+            document.getElementById("correct").innerText = correctGuessList;
+            count_of_Correct = 0;
+            document.getElementById("correct_count").innerText = "Correct Guesses: " + count_of_Correct;
+            resultString =result.join('');
+            document.getElementById("Rack").innerText = result;
+            
+            $.ajax({
+                method: "GET",
+                url: "api.php",
+                data: { "receiver": resultString},
+                success : function(data) {
+                    handleData(data);
+                }
+            })  
+        }
       });
     });
   </script>
