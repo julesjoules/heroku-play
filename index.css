@@ -1,0 +1,62 @@
+body {
+  background-color: #9D9D9D;
+  font-style: normal;
+  text-align: center;
+}
+
+h1 {
+  font-family: "Dubai";
+  font-size: 65px;
+  color: #900C3F;
+}
+
+h3 {
+  font-family: "Arial";
+  font-style: italic;
+  color: #900C3F;
+  font-size: 30px;
+}
+
+h4 {
+  font-family: "Arial";
+  font-style: italic;
+  color: #900C3F;
+  font-size: 30px;
+}
+p {
+  font-family: "Verdana";
+  font-size: 20px;
+  color: #FF5733 ;
+  font-style: normal;
+}
+
+span {
+    color: #FF5733;
+}
+
+
+label {
+  font-family: "Dubai";
+  font-size: 20px;
+  color: #FFC300 ;
+}
+
+input {
+  font-family: "Verdana";
+  font-size: 16px;
+  color: black ;
+  padding: 10px;
+}
+
+button {
+  font-family: "Verdana";
+  background-color: #581845;
+  border: none;
+  color: white;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: red ;
+  color: white;
+}
