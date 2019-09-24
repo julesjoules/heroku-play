@@ -11,13 +11,13 @@
         $rack_pick = substr(str_shuffle($possibleLet), 0, $letLength);//select random shuffled letter group
         $tmp = str_split($rack_pick);//prepare to sort
         sort($tmp);//sort alpha
-        return imlode($tmp);//collapse back and return sorted letter group
+        return implode($tmp);//collapse back and return sorted letter group
     };
 //post/get rack
-    if(($_POST)){
-        $newrack = $POST['user-rack'];
-        console.log("post, rack picked);
-       } else{
+    //if(($_POST)){
+       // $newrack = $POST['user-rack'];
+       // console.log("post, rack picked);
+      // } else{
        $newrack = select_rack(7);//generate new rack with length of 7
        
        //create array of racks for game
